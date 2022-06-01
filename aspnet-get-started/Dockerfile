@@ -6,7 +6,7 @@ COPY . ./
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o usr/app/out
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 
 EXPOSE 80
