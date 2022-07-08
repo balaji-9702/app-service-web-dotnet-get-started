@@ -1,0 +1,98 @@
+trigger: none
+stages:
+- stage: CI
+  jobs:
+  - job: Job_1
+    displayName:  Build Agent 
+    pool:
+      vmImage: 'windows-latest'
+
+    variables:
+      solution: '**/*.csproj'
+      testsolution: '**/*[Tt]ests/*.csproj'
+      buildPlatform: 'Any CPU'
+      buildConfiguration: 'Release'
+
+    steps:
+    - checkout: self
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '$(solution)'
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        arguments: '--configuration $(BuildConfiguration)'
+        projects: '$(solution)'
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+       command: test
+       arguments: '--configuration $(BuildConfiguration)'
+       projects: '$(testsolution)'
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+       command: publish
+       publishWebProjects: True
+       arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+       zipAfterPublish: True
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Dacpac'
+      inputs:
+       SourceFolder: Dacpac
+       TargetFolder: '$(build.artifactstagingdirectory)/Dacpac'
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)/Terraform copy'
+      inputs:
+       SourceFolder: terraform
+       TargetFolder: '$(build.artifactstagingdirectory)/Terraform'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+       PathtoPublish: '$(build.artifactstagingdirectory)'
+       ArtifactName: 'drop'
+       
+
+- stage: CD
+  dependsOn: CI
+  jobs:
+  - job: Job_2
+    displayName: Deploy Agent 
+    pool:
+       vmImage: 'windows-latest'
+    steps:
+     - task: DownloadPipelineArtifact@2
+       inputs:
+        buildType: 'current'
+        buildVersionToDownload: 'latest'
+        targetPath: '$(build.artifactstagingdirectory)'
+     - task: AzureRmWebAppDeployment@4
+       displayName: 'Azure App Service Deploy: lti-webappbubul1'
+       inputs:
+        azureSubscription: 'Cloud Lab (f83aae0f-b5dd-4ce9-8483-a007ea91312b)'
+        WebAppName: 'lti-webappbubul1'
+        deployToSlotOrASE: true
+        ResourceGroupName: 'webapp-rg'
+        SlotName: staging
+        packageForLinux: '$(build.artifactstagingdirectory)/drop/s.zip'
+    
+     - task: AzureAppServiceManage@0
+       displayName: 'Swap Slots: lti-webappbubul1'
+       inputs:
+        azureSubscription: 'Cloud Lab (f83aae0f-b5dd-4ce9-8483-a007ea91312b)'
+        WebAppName: 'lti-webappbubul1'
+        ResourceGroupName: 'webapp-rg'
+        SourceSlot: staging
+    
+     - task: SqlAzureDacpacDeployment@1
+       displayName: 'Azure SQL DacpacTask'
+       inputs:
+        azureSubscription: 'Cloud Lab (f83aae0f-b5dd-4ce9-8483-a007ea91312b)'
+        ServerName: hubwdbs001.database.windows.net
+        DatabaseName: vehicledemodb
+        SqlUsername: sqluser
+        SqlPassword: 'User@2022sql'
+        DacpacFile: '$(System.DefaultWorkingDirectory)/drop/Dacpac/vehicledemodb.dacpac'
+
