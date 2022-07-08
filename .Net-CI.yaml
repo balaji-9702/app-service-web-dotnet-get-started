@@ -19,7 +19,7 @@ stages:
     - checkout: self
       clean: true
     - task: NuGetToolInstaller@1
-      displayName: 'Use NuGet 
+      displayName: Use NuGet
       inputs:
         checkLatest: true
     - task: DotNetCoreCLI@2
