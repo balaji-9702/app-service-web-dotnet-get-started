@@ -1,7 +1,7 @@
 parameters:
       - name: solution
         type: string
-        default: '**/*.csproj'
+        default: '**/*.sln'
       - name: buildPlatform
         type: string
         default: 'Any CPU'
