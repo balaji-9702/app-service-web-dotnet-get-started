@@ -30,7 +30,7 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
-        arguments: '--configuration ${{parameters.buildConfiguration}}'
+        arguments: --configuration ${{parameters.buildConfiguration}}
         projects: ${{parameters.solution}}
     
     - task: DotNetCoreCLI@2
