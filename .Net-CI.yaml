@@ -8,14 +8,14 @@ parameters:
       - name: buildConfiguration
         type: string
         default: 'Release'       
- stages:
+stages:
 - stage: CI
   jobs:
   - job: Job_1
     displayName:  Build Agent 
     pool:
       vmImage: 'windows-latest'
-   steps:
+    steps:
     - checkout: self
     - task: DotNetCoreCLI@2
       displayName: Restore
@@ -41,4 +41,3 @@ parameters:
       inputs:
        PathtoPublish: '$(build.artifactstagingdirectory)'
        ArtifactName: 'drop'
-       
