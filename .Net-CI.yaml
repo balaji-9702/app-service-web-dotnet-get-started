@@ -31,7 +31,7 @@ stages:
       displayName: Build
       inputs:
         arguments: '--configuration ${{parameters.buildConfiguration}}'
-        projects: '${{parameters.solution}}'
+        projects: ${{parameters.solution}}
     
     - task: DotNetCoreCLI@2
       displayName: Publish
