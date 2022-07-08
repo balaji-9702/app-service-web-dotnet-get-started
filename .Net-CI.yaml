@@ -26,7 +26,7 @@ stages:
       displayName: Restore
       inputs:
         command: restore
-        projects: '${{parameters.solution}}'
+        projects: ${{parameters.solution}}
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
