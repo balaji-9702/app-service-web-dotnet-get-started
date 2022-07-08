@@ -6,7 +6,6 @@ stages:
     displayName:  Build Agent 
     pool:
       vmImage: 'windows-latest'
-
-   extends:
-     template: testing-template.yml
+      extends:
+      template: .Net-CI.yaml
 
