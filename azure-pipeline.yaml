@@ -1,0 +1,12 @@
+trigger: none
+stages:
+- stage: CI
+  jobs:
+  - job: Job_1
+    displayName:  Build Agent 
+    pool:
+      vmImage: 'windows-latest'
+
+   extends:
+     template: testing-template.yml
+
