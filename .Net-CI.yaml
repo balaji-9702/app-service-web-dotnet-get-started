@@ -1,7 +1,7 @@
 parameters:
       - name: solution
         type: string
-        default: '**/*.sln'
+        default: 'aspnet-get-started/*.csproj'
       - name: buildPlatform
         type: string
         default: 'Any CPU'
