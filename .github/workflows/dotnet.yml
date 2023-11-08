@@ -24,6 +24,9 @@ jobs:
     - name: NuGet to restore dependencies as well as project-specific tools that are specified in the project file
       run: nuget restore  aspnet-get-started.sln 
 
+    - name: Run MSBuild
+      run: msbuild aspnet-get-started.sln 
+
     - name: Zip output
       uses: vimtor/action-zip@v1.1
       with:
@@ -53,7 +56,6 @@ jobs:
       #with:
       #  vs-version: "[16.4,16.5]"  #Version of Visual Studio to search; defaults to latest if not specified
 
-    - name: Run MSBuild
-      run: msbuild aspnet-get-started.sln  
+     
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
