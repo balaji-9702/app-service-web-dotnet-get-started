@@ -22,7 +22,7 @@ jobs:
       with:
         nuget-version: '5.3.1'
     - name: NuGet to restore dependencies as well as project-specific tools that are specified in the project file
-      run: nuget restore  app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started.sln 
+      run: nuget restore  aspnet-get-started.sln 
 
   
     - name: Add msbuild to PATH
@@ -31,6 +31,6 @@ jobs:
       #  vs-version: "[16.4,16.5]"  #Version of Visual Studio to search; defaults to latest if not specified
 
     - name: Run MSBuild
-      run: msbuild app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started.sln  
+      run: msbuild aspnet-get-started.sln  
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
