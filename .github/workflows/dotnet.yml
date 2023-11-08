@@ -62,7 +62,7 @@ jobs:
           unzip "${SONAR_CLI}.zip"
           pwd
           rm -rf sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.properties
-          cp $GITHUB_WORKSPACE/sonar-scanner.properties sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.propert 
+          cp $GITHUB_WORKSPACE/sonar-scanner.properties sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.properties 
           chmod u+x "${SONAR_FOLDER}/bin/sonar-scanner"
           echo "PATH=\"${PATH}:${PWD}/${SONAR_FOLDER}/bin\"" >> $GITHUB_ENV
           source $GITHUB_ENV
