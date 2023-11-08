@@ -50,7 +50,24 @@ jobs:
     - name: Ensure Presence of zip file
       run:  |
          cd /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/
-         ls -lrt   
+         ls -lrt 
+
+    - name: Download and Set Up SonarScanner
+      run: |
+          echo 'export SONAR_VERSION="4.6.2.2472-linux"' >> $GITHUB_ENV
+          echo 'export SONAR_CLI="sonar-scanner-cli-${SONAR_VERSION}"' >> $GITHUB_ENV
+          echo 'export SONAR_FOLDER="sonar-scanner-${SONAR_VERSION}"' >> $GITHUB_ENV
+          source $GITHUB_ENV
+          curl "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/${SONAR_CLI}.zip" -o "${SONAR_CLI}.zip"
+          unzip "${SONAR_CLI}.zip"
+          pwd
+          rm -rf sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.properties
+          cp $GITHUB_WORKSPACE/sonar-scanner.properties sonar-scanner-4.6.2.2472-linux/conf/sonar-scanner.propert 
+          chmod u+x "${SONAR_FOLDER}/bin/sonar-scanner"
+          echo "PATH=\"${PATH}:${PWD}/${SONAR_FOLDER}/bin\"" >> $GITHUB_ENV
+          source $GITHUB_ENV
+#          /home/runner/work/New-Java-proj-Workflow/New-Java-proj-Workflow/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner -Dsonar.login=sqa_d43598d369064200cd82c7b70d4c0c97e38d50de  -Dsonar.password=admin1  -Dsonar.export.results=sonar-results.xml -X
+#          ls -lrt     
 
     - name: Create Release
       id: create_release
