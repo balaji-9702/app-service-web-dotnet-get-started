@@ -27,12 +27,24 @@ jobs:
     - name: Run MSBuild
       run: msbuild aspnet-get-started.sln 
 
-    - name: Zip output
-      uses: vimtor/action-zip@v1.1
-      with:
+  #  - name: Zip output
+  #    uses: vimtor/action-zip@v1.1
+  #    with:
         #args: zip -qq -r artifact.zip   -d New-Java-proj-Workflow/onlinebookstore-J2EE/target/*.war 
-        files:  /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
-        dest:   /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/artifact.zip
+  #      files:  /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
+  #      dest:   /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/artifact.zip
+
+    - name: Create ZIP Archive
+      run: |
+        cd /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/   
+        zip -r artifact.zip .  
+      id: zip
+
+    - name: Upload ZIP Archive
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifact  # Change to a desired artifact name
+        path: /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/
 
     - name: Ensure Presence of zip file
       run:  |
