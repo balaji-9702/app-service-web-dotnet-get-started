@@ -50,6 +50,16 @@ jobs:
        draft: false
        prerelease: false
 
+    - name: Upload Release 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: app-service-web-dotnet-get-started/artifact.zip
+        asset_name: artifact.zip
+        asset_content_type: application/zip
+
   
  #   - name: Add msbuild to PATH
  #     uses: microsoft/setup-msbuild@v1.0.0
