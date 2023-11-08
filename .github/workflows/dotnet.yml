@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build aspnet-get-started.sln 
+      run: dotnet build app-service-web-dotnet-get-started/aspnet-get-started.sln 
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
