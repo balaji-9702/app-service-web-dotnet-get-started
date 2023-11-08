@@ -31,7 +31,7 @@ jobs:
       uses: vimtor/action-zip@v1.1
       with:
         #args: zip -qq -r artifact.zip   -d New-Java-proj-Workflow/onlinebookstore-J2EE/target/*.war 
-        files:  app-service-web-dotnet-get-started/aspnet-get-started/*.dll
+        files:  app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
         dest:   app-service-web-dotnet-get-started/artifact.zip
 
     - name: Ensure Presence of zip file
