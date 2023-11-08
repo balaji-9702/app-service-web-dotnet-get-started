@@ -36,7 +36,7 @@ jobs:
 
     - name: Ensure Presence of zip file
       run:  |
-         cd /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/
+         cd /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/
          ls -lrt   
 
     - name: Create Release
