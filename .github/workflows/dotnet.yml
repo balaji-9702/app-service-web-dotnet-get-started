@@ -58,8 +58,8 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       with:
-       tag_name: "${{ github.run_id }}-AT"
-       release_name: "${{ github.run_id }}-AT"
+       tag_name: "app-service-web-dotnet-get-started-${{ github.run_id }}-AT"
+       release_name: "app-service-web-dotnet-get-started-${{ github.run_id }}-AT"
        draft: false
        prerelease: false
 
