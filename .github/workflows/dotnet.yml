@@ -24,6 +24,17 @@ jobs:
     - name: NuGet to restore dependencies as well as project-specific tools that are specified in the project file
       run: nuget restore  aspnet-get-started.sln 
 
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      with:
+       tag_name: "${{ github.run_id }}"
+       release_name: "${{ github.run_id }}"
+       draft: false
+       prerelease: false
+
   
  #   - name: Add msbuild to PATH
  #     uses: microsoft/setup-msbuild@v1.0.0
