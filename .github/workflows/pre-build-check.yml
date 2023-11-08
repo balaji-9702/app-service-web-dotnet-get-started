@@ -1,0 +1,55 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.3.1'
+    - name: NuGet to restore dependencies as well as project-specific tools that are specified in the project file
+      run: nuget restore  aspnet-get-started.sln 
+
+    - name: Run MSBuild
+      run: msbuild aspnet-get-started.sln 
+
+  #  - name: Zip output
+  #    uses: vimtor/action-zip@v1.1
+  #    with:
+        #args: zip -qq -r artifact.zip   -d New-Java-proj-Workflow/onlinebookstore-J2EE/target/*.war 
+  #      files:  /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
+  #      dest:   /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/artifact.zip
+
+    
+
+   
+
+     
+
+    
+
+    
+
+  
+ #   - name: Add msbuild to PATH
+ #     uses: microsoft/setup-msbuild@v1.0.0
+      #with:
+      #  vs-version: "[16.4,16.5]"  #Version of Visual Studio to search; defaults to latest if not specified
+
+     
+  #  - name: Test
+  #    run: dotnet test --no-build --verbosity normal
