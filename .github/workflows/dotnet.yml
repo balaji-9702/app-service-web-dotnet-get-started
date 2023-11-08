@@ -31,8 +31,8 @@ jobs:
       uses: vimtor/action-zip@v1.1
       with:
         #args: zip -qq -r artifact.zip   -d New-Java-proj-Workflow/onlinebookstore-J2EE/target/*.war 
-        files:  app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
-        dest:   app-service-web-dotnet-get-started/artifact.zip
+        files:  /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/aspnet-get-started/bin/*.dll
+        dest:   /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/artifact.zip
 
     - name: Ensure Presence of zip file
       run:  |
@@ -56,7 +56,7 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app-service-web-dotnet-get-started/artifact.zip
+        asset_path: /home/runner/work/app-service-web-dotnet-get-started/app-service-web-dotnet-get-started/artifact.zip
         asset_name: artifact.zip
         asset_content_type: application/zip
 
